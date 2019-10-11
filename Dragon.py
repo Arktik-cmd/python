@@ -16,6 +16,7 @@ if friendly_cave != number:
      И тут выпригивает огромный дракон, и ...
      Съедает тебя мой друг, ты проиграл!''')
 play_again = 'да'
+
 while play_again == 'да':
     print('Сыграем еще? Ответь "Да" или "Нет"')
     play_again = input()
