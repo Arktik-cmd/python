@@ -32,7 +32,6 @@ def check_cave(selected_cave):
 
 
 play_again = 'да'
-
 while play_again == 'да':
     intro()
     check_cave(select_cave())

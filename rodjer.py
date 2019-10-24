@@ -12,7 +12,6 @@ while answer not in {'да', 'нет'}:
 if answer == 'да':
     print('Хорошо давай начнем')
     question_quantity = ''
-
     while not question_quantity.isdigit():
         print(name + ', сколько примеров ты готов решить?')
         question_quantity = input()
