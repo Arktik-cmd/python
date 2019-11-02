@@ -1,5 +1,6 @@
 from time import sleep
 from random import randint,choice
+from timeit import default_timer
 
 print('Привет меня зовут Роджер, а как тебя?')
 name = input()
@@ -17,7 +18,9 @@ if answer == 'да':
 
     question_quantity = ''
     count_to = ''
-
+    correct_answers = 0
+    fails = 0
+    time_in_seconds = 0
 
     while not question_quantity.isdigit():
         print(name + ', сколько примеров ты готов решить?')
@@ -59,16 +62,49 @@ if answer == 'да':
             while number1 < number2:
                 number1 = randint(1, int(count_to))
                 number2 = randint(1, int(count_to))
-                sign = choice('+-')
+            correct_answer = number1 - number2
 
         if sign == '+':
-            while number1 + number2 > count_to:
+            while number1 + number2 > int(count_to):
                 number1 = randint(1, int(count_to))
                 number2 = randint(1, int(count_to))
-                sign = choice('+-')
-
+            correct_answer = number1 + number2
 
         print(number1, sign, number2)
+        print('Итак, дай свой ответ:')
+
+        start = default_timer()
+        student_answer = input()
+        stop = default_timer()
+
+        time_in_seconds += stop - start
+
+        if int(student_answer) == correct_answer:
+            print('Правильно, молодец')
+            correct_answers += 1
+        else:
+            print('Неправильно')
+            print(f'Правильный ответ: {correct_answer}')
+            fails += 1
+
+    if time_in_seconds < 60:
+        time_spent = f'{time_in_seconds} секунд'
+    else:
+        minutes = time_in_seconds // 60
+        seconds = time_in_seconds - (minutes*60)
+        if seconds == 0:
+            time_spent = f'{minutes} минут'
+        else:
+            time_spent = f'{minutes} минут и {seconds} секунд'
+
+    if fails == 0:
+        print(f'Молодец, {name}, ты верно ответил на все вопросы за {time_spent}')
+    else:
+        print(f'Ошибок {fails}, а правильных ответов {correct_answers}')
+        print(f'Затраченное время: {time_spent}')
+
+
+
 
 else:
     print('''Передумал, зря!
