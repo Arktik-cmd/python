@@ -2,6 +2,35 @@ from time import sleep
 from random import randint,choice
 from timeit import default_timer
 
+def time_endings(digit):
+    digit = str(digit)
+    last_digit = digit[-1]
+    if digit == '11':
+        return ''
+    else:
+        if last_digit == '1':
+            return 'у'
+        elif 1 < int(last_digit) < 5:
+            return 'ы'
+        else:
+            return ''
+
+
+def time_convert(time_in_seconds):
+    if time_in_seconds < 60:
+        time_spent = f'{time_in_seconds} секунд{time_endings(time_in_seconds)}'
+    else:
+        minutes = time_in_seconds // 60
+        seconds = time_in_seconds - (minutes*60)
+        if seconds == 0:
+            time_spent = f'{minutes} минут{time_endings(minutes)}'
+        else:
+            time_spent = f'{minutes} минут{time_endings(minutes)} и секунд{time_endings(seconds)}'
+    return time_spent
+
+
+
+
 print('Привет меня зовут Роджер, а как тебя?')
 name = input()
 print('Приятно познакомиться ' + name)
@@ -77,7 +106,7 @@ if answer == 'да':
         student_answer = input()
         stop = default_timer()
 
-        time_in_seconds += stop - start
+        time_in_seconds += round(stop - start)
 
         if int(student_answer) == correct_answer:
             print('Правильно, молодец')
@@ -87,23 +116,11 @@ if answer == 'да':
             print(f'Правильный ответ: {correct_answer}')
             fails += 1
 
-    if time_in_seconds < 60:
-        time_spent = f'{time_in_seconds} секунд'
-    else:
-        minutes = time_in_seconds // 60
-        seconds = time_in_seconds - (minutes*60)
-        if seconds == 0:
-            time_spent = f'{minutes} минут'
-        else:
-            time_spent = f'{minutes} минут и {seconds} секунд'
-
     if fails == 0:
-        print(f'Молодец, {name}, ты верно ответил на все вопросы за {time_spent}')
+        print(f'Молодец, {name}, ты верно ответил на все вопросы за {time_convert(time_in_seconds)}')
     else:
         print(f'Ошибок {fails}, а правильных ответов {correct_answers}')
-        print(f'Затраченное время: {time_spent}')
-
-
+        print(f'Затраченное время: {time_convert(time_in_seconds)}')
 
 
 else:
