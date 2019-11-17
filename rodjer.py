@@ -1,6 +1,7 @@
 from time import sleep
 from random import randint,choice
 from timeit import default_timer
+import os
 
 def time_endings(digit):
     digit = str(digit)
@@ -27,6 +28,17 @@ def time_convert(time_in_seconds):
         else:
             time_spent = f'{minutes} минут{time_endings(minutes)} и секунд{time_endings(seconds)}'
     return time_spent
+
+
+def select_mode():
+    mode = ''
+    while not mode.isdigit():
+        print('Выбери режим')
+        mode = input()
+        while not mode.isdigit():
+            print('Должна быть цифра!')
+            mode = input()
+    return mode
 
 def count():
     print('''Давай проверим твои знания в математике''')
@@ -102,6 +114,8 @@ def count():
             print('Неправильно')
             print(f'Правильный ответ: {correct_answer}')
             fails += 1
+            with open(file_name, 'a') as f:
+                f.write(f'{number1} {sign} {number2} 3\n')
 
     if fails == 0:
         print(f'Молодец, {name}, ты верно ответил на все вопросы за {time_convert(time_in_seconds)}')
@@ -109,11 +123,19 @@ def count():
         print(f'Ошибок {fails}, а правильных ответов {correct_answers}')
         print(f'Затраченное время: {time_convert(time_in_seconds)}')
 
+def fix_errors():
+    pass
 
 #Основной блок
 print('Привет меня зовут Роджер, а как тебя?')
 name = input()
 print('Приятно познакомиться ' + name)
+file_name = f'{name.lower()}_errors.txt'
+if os.path.exists(file_name):
+    print('''Режимы:
+    1 - Тренировка
+    2 - Работа над ошибками''')
+    print(select_mode())
 
 count_again = "Да"
 while count_again == "Да":
@@ -123,4 +145,5 @@ while count_again == "Да":
     while count_again not in {'да', 'нет'}:
         print('Должно быть "да" или "нет" ')
         count_again = input()
+
 print('Давай, напишешь..')
