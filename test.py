@@ -1,2 +1,6 @@
-for i in range(11, 21, 2):
-    print(i)
+n = 4
+s = 0
+while n <= 8:
+    s += n
+    n += 1
+print(s)

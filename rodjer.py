@@ -3,7 +3,7 @@ from random import randint,choice
 from timeit import default_timer
 import os
 
-#Функция проверки окончаний
+#Эта функция отвечает за окончание времени
 def time_endings(digit):
     digit = str(digit)
     last_digit = digit[-1]
@@ -17,7 +17,7 @@ def time_endings(digit):
         else:
             return ''
 
-
+#Эта функция отвечает за подсчет времени
 def time_convert(time_in_seconds):
     if time_in_seconds < 60:
         time_spent = f'{time_in_seconds} секунд{time_endings(time_in_seconds)}'
@@ -30,7 +30,7 @@ def time_convert(time_in_seconds):
             time_spent = f'{minutes} минут{time_endings(minutes)} и секунд{time_endings(seconds)}'
     return time_spent
 
-
+#Эта функция отвечает за список режимов(при допуске ошибок)
 def select_mode():
     mode = ''
     while not mode.isdigit():
@@ -41,7 +41,7 @@ def select_mode():
             mode = input()
     return mode
 
-
+#Эта функция отвечает за составление примеров и их проверку и за подсчет времени
 def count():
     print('''Давай проверим твои знания в математике''')
 
@@ -125,6 +125,7 @@ def count():
         print(f'Ошибок {fails}, а правильных ответов {correct_answers}')
         print(f'Затраченное время: {time_convert(time_in_seconds)}')
 
+#Эта функция отвечает за исправление ошибок
 def fix_errors():
     pass
 
