@@ -3,6 +3,7 @@ from random import randint,choice
 from timeit import default_timer
 import os
 
+#Функция проверки окончаний
 def time_endings(digit):
     digit = str(digit)
     last_digit = digit[-1]
@@ -39,6 +40,7 @@ def select_mode():
             print('Должна быть цифра!')
             mode = input()
     return mode
+
 
 def count():
     print('''Давай проверим твои знания в математике''')
