@@ -1,9 +1,10 @@
 from time import sleep
-from random import randint,choice
+from random import randint, choice
 from timeit import default_timer
 import os
 
-#Эта функция отвечает за окончание времени
+
+# Эта функция отвечает за окончание времени
 def time_endings(digit):
     digit = str(digit)
     last_digit = digit[-1]
@@ -17,20 +18,22 @@ def time_endings(digit):
         else:
             return ''
 
-#Эта функция отвечает за подсчет времени
+
+# Эта функция отвечает за подсчет времени
 def time_convert(time_in_seconds):
     if time_in_seconds < 60:
         time_spent = f'{time_in_seconds} секунд{time_endings(time_in_seconds)}'
     else:
         minutes = time_in_seconds // 60
-        seconds = time_in_seconds - (minutes*60)
+        seconds = time_in_seconds - (minutes * 60)
         if seconds == 0:
             time_spent = f'{minutes} минут{time_endings(minutes)}'
         else:
             time_spent = f'{minutes} минут{time_endings(minutes)} и секунд{time_endings(seconds)}'
     return time_spent
 
-#Эта функция отвечает за список режимов(при допуске ошибок)
+
+# Эта функция отвечает за список режимов(при допуске ошибок)
 def select_mode():
     mode = ''
     if os.path.exists(file_name):
@@ -50,10 +53,10 @@ def select_mode():
 
     return mode
 
-#Эта функция отвечает за составление примеров и их проверку и за подсчет времени
+
+# Эта функция отвечает за составление примеров и их проверку и за подсчет времени
 def count():
     print('''Давай проверим твои знания в математике''')
-
 
     question_quantity = ''
     count_to = ''
@@ -74,7 +77,6 @@ def count():
                     question_quantity = input()
         else:
             print('Должна быть цифра')
-    
 
     while not count_to.isdigit():
         print('До скольки будем считать? Например до 100')
@@ -91,10 +93,10 @@ def count():
     print('Хорошо, тогда начнем...')
     sleep(1)
 
-    for question in range (int(question_quantity)):
-        print(f'Пример {question+1}:')
-        number1 = randint(1,int(count_to))
-        number2 = randint(1,int(count_to))
+    for question in range(int(question_quantity)):
+        print(f'Пример {question + 1}:')
+        number1 = randint(1, int(count_to))
+        number2 = randint(1, int(count_to))
         sign = choice('+-')
 
         if sign == '-':
@@ -134,13 +136,15 @@ def count():
         print(f'Ошибок {fails}, а правильных ответов {correct_answers}')
         print(f'Затраченное время: {time_convert(time_in_seconds)}')
 
-#Эта функция отвечает за исправление ошибок
+
+# Эта функция отвечает за исправление ошибок
 def fix_errors():
     print(f'{name}, давай исправим твои ошибки')
 
 
 
-#Основной блок
+
+# Основной блок
 print('Привет меня зовут Роджер, а как тебя?')
 name = input()
 print('Приятно познакомиться ' + name)
@@ -160,6 +164,4 @@ while True:
     else:
         pass
 
-
-
-print('Давай, напишешь..')
+    print('Давай, напишешь...')
