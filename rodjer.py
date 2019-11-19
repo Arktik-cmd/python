@@ -33,12 +33,21 @@ def time_convert(time_in_seconds):
 #Эта функция отвечает за список режимов(при допуске ошибок)
 def select_mode():
     mode = ''
+    if os.path.exists(file_name):
+        print('''Режимы:
+        1 - Тренировка
+        2 - Работа над ошибками''')
+    else:
+        print('''Режимы:
+        1 - Тренировка''')
+
     while not mode.isdigit():
         print('Выбери режим')
         mode = input()
         while not mode.isdigit():
             print('Должна быть цифра!')
             mode = input()
+
     return mode
 
 #Эта функция отвечает за составление примеров и их проверку и за подсчет времени
@@ -127,26 +136,30 @@ def count():
 
 #Эта функция отвечает за исправление ошибок
 def fix_errors():
-    pass
+    print(f'{name}, давай исправим твои ошибки')
+
+
 
 #Основной блок
 print('Привет меня зовут Роджер, а как тебя?')
 name = input()
 print('Приятно познакомиться ' + name)
 file_name = f'{name.lower()}_errors.txt'
-if os.path.exists(file_name):
-    print('''Режимы:
-    1 - Тренировка
-    2 - Работа над ошибками''')
-    print(select_mode())
 
 count_again = "Да"
-while count_again == "Да":
-    count()
-    print('Сыграем еще?')
-    count_again = input()
-    while count_again not in {'да', 'нет'}:
-        print('Должно быть "да" или "нет" ')
-        count_again = input()
+
+
+while True:
+
+    mode = select_mode()
+
+    if mode == '1':
+        count()
+    elif mode == '2':
+        fix_errors()
+    else:
+        pass
+
+
 
 print('Давай, напишешь..')
