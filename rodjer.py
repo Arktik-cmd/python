@@ -3,7 +3,6 @@ from random import randint, choice
 from timeit import default_timer
 import os
 
-
 # Эта функция отвечает за окончание времени
 def time_endings(digit):
     digit = str(digit)
@@ -18,7 +17,6 @@ def time_endings(digit):
         else:
             return ''
 
-
 # Эта функция отвечает за подсчет времени
 def time_convert(time_in_seconds):
     if time_in_seconds < 60:
@@ -31,7 +29,6 @@ def time_convert(time_in_seconds):
         else:
             time_spent = f'{minutes} минут{time_endings(minutes)} и секунд{time_endings(seconds)}'
     return time_spent
-
 
 # Эта функция отвечает за список режимов(при допуске ошибок)
 def select_mode():
@@ -52,7 +49,6 @@ def select_mode():
             mode = input()
 
     return mode
-
 
 # Эта функция отвечает за составление примеров и их проверку и за подсчет времени
 def count():
@@ -136,13 +132,29 @@ def count():
         print(f'Ошибок {fails}, а правильных ответов {correct_answers}')
         print(f'Затраченное время: {time_convert(time_in_seconds)}')
 
-
 # Эта функция отвечает за исправление ошибок
 def fix_errors():
     print(f'{name}, давай исправим твои ошибки')
+    file_name2 = f'tmp_{file_name}'
+    with open(file_name, 'r') as f:
+        line = f.readline()
+        splited_line = line.split()
+        number1, sign, number2, trycount = splited_line
 
+        print(f'Сколько будет {number1} {sign} {number2} ?')
+        answer = input()
+        if sign == '+':
+            correct_answer = int(number1) + int(number2)
+        if sign == '-':
+            correct_answer = int(number1) - int(number2)
 
+        with open(file_name2, 'a')as f2:
+            if correct_answer == int(answer):
+                print('Молодец!')
 
+                f2.write(f'{number1} {sign} {number2} {int(trycount)-1}' )
+            else:
+                print('Неправильно!')
 
 # Основной блок
 print('Привет меня зовут Роджер, а как тебя?')
@@ -151,7 +163,6 @@ print('Приятно познакомиться ' + name)
 file_name = f'{name.lower()}_errors.txt'
 
 count_again = "Да"
-
 
 while True:
 
