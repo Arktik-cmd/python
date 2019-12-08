@@ -3,6 +3,10 @@ from random import randint, choice
 from timeit import default_timer
 import os
 
+def warnings():
+    warnings = ['Ты ошибся!', 'Ты не прав', 'Найди ошибку','Где то ошибка']
+    return warnings[randint(0, len(warnings)-1)]
+
 # Эта функция отвечает за окончание времени
 def time_endings(digit):
     digit = str(digit)
@@ -49,6 +53,21 @@ def select_mode():
             mode = input()
 
     return mode
+
+#Эта функция удаляет дубликаты в файле
+def delete_same_rows():
+    with open(file_name, 'r') as f, open(f'tmp_{file_name}', 'a')as f2:
+        uniques = []
+        for row in f:
+            splited = row.split()
+            number1, sign, number2, repeat = splited
+            unique = f'{number1} {sign} {number2}'
+            if unique not in uniques:
+                uniques.append(unique)
+                f2.write(f'{inique} {repeat}')
+    os.delete(file_name)
+    os.rename(f'tmp_{file_name}', file_name)
+
 
 # Эта функция отвечает за составление примеров и их проверку и за подсчет времени
 def count():
@@ -120,7 +139,7 @@ def count():
             print('Правильно, молодец')
             correct_answers += 1
         else:
-            print('Неправильно')
+            print(warnings())
             print(f'Правильный ответ: {correct_answer}')
             fails += 1
             with open(file_name, 'a') as f:
@@ -131,6 +150,8 @@ def count():
     else:
         print(f'Ошибок {fails}, а правильных ответов {correct_answers}')
         print(f'Затраченное время: {time_convert(time_in_seconds)}')
+
+    delete_same_rows()
 
 # Эта функция отвечает за исправление ошибок
 def fix_errors():
@@ -154,7 +175,8 @@ def fix_errors():
 
                 f2.write(f'{number1} {sign} {number2} {int(trycount)-1}' )
             else:
-                print('Неправильно!')
+                print(warnings())
+
 
 # Основной блок
 print('Привет меня зовут Роджер, а как тебя?')
