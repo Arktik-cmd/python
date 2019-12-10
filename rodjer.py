@@ -3,6 +3,7 @@ from random import randint, choice
 from timeit import default_timer
 import os
 
+#Варианты отвветов при ошибке
 def warnings():
     warnings = ['Ты ошибся!', 'Ты не прав', 'Найди ошибку','Где то ошибка']
     return warnings[randint(0, len(warnings)-1)]
@@ -40,10 +41,12 @@ def select_mode():
     if os.path.exists(file_name):
         print('''Режимы:
         1 - Тренировка
-        2 - Работа над ошибками''')
+        2 - Работа над ошибками
+        0 - Выход''')
     else:
         print('''Режимы:
-        1 - Тренировка''')
+        1 - Тренировка
+        0 - Выход''')
 
     while not mode.isdigit():
         print('Выбери режим')
@@ -54,19 +57,20 @@ def select_mode():
 
     return mode
 
-#Эта функция удаляет дубликаты в файле
+#Эта функция удаляет дубликаты в файле ошибок
 def delete_same_rows():
-    with open(file_name, 'r') as f, open(f'tmp_{file_name}', 'a')as f2:
-        uniques = []
-        for row in f:
-            splited = row.split()
-            number1, sign, number2, repeat = splited
-            unique = f'{number1} {sign} {number2}'
-            if unique not in uniques:
-                uniques.append(unique)
-                f2.write(f'{inique} {repeat}')
-    os.delete(file_name)
-    os.rename(f'tmp_{file_name}', file_name)
+    if os.path.exists(file_name):
+        with open(file_name, 'r') as f, open(f'tmp_{file_name}', 'a')as f2:
+            uniques = []
+            for row in f:
+                splited = row.split()
+                number1, sign, number2, repeat = splited
+                unique = f'{number1} {sign} {number2}'
+                if unique not in uniques:
+                    uniques.append(unique)
+                    f2.write(f'{unique} {repeat}\n')
+        os.remove(file_name)
+        os.rename(f'tmp_{file_name}', file_name)
 
 
 # Эта функция отвечает за составление примеров и их проверку и за подсчет времени
@@ -160,7 +164,7 @@ def fix_errors():
     with open(file_name, 'r') as f:
         line = f.readline()
         splited_line = line.split()
-        number1, sign, number2, trycount = splited_line
+        number1, sign, number2, repeat = splited_line
 
         print(f'Сколько будет {number1} {sign} {number2} ?')
         answer = input()
@@ -173,10 +177,12 @@ def fix_errors():
             if correct_answer == int(answer):
                 print('Молодец!')
 
-                f2.write(f'{number1} {sign} {number2} {int(trycount)-1}' )
+                f2.write(f'{number1} {sign} {number2} {int(repeat)-1}\n' )
+
             else:
                 print(warnings())
-
+    os.remove(file_name)
+    os.rename(f'tmp_{file_name}', file_name)
 
 # Основной блок
 print('Привет меня зовут Роджер, а как тебя?')
@@ -195,6 +201,7 @@ while True:
     elif mode == '2':
         fix_errors()
     else:
-        pass
+        print('Пока')
+        break
 
     print('Давай, напишешь...')
