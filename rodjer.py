@@ -3,7 +3,7 @@ from random import randint, choice
 from timeit import default_timer
 import os
 
-#Варианты отвветов при ошибке
+#Варианты ответов при ошибке
 def warnings():
     warnings = ['Ты ошибся!', 'Ты не прав', 'Найди ошибку','Где то ошибка']
     return warnings[randint(0, len(warnings)-1)]
