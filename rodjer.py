@@ -178,6 +178,8 @@ def fix_errors():
                 print('Молодец!')
 
                 f2.write(f'{number1} {sign} {number2} {int(repeat)-1}\n' )
+                if int(repeat) < 1:
+                    print('Ошибок больше нет, ты молодец!')
 
             else:
                 print(warnings())
