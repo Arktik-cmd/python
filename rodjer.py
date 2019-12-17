@@ -161,31 +161,42 @@ def count():
 def fix_errors():
     print(f'{name}, давай исправим твои ошибки')
     file_name2 = f'tmp_{file_name}'
-    with open(file_name, 'r') as f:
-        line = f.readline()
-        splited_line = line.split()
-        number1, sign, number2, repeat = splited_line
+    with open(file_name, 'r') as f, open(file_name2, 'a')as f2:
 
-        print(f'Сколько будет {number1} {sign} {number2} ?')
-        answer = input()
-        if sign == '+':
-            correct_answer = int(number1) + int(number2)
-        if sign == '-':
-            correct_answer = int(number1) - int(number2)
+        for line in f:
 
-        with open(file_name2, 'a')as f2:
+            splited_line = line.split()
+            number1, sign, number2, repeat = splited_line
+
+            print(f'Сколько будет {number1} {sign} {number2} ?')
+            answer = input()
+            if sign == '+':
+                correct_answer = int(number1) + int(number2)
+            if sign == '-':
+                correct_answer = int(number1) - int(number2)
+
             if correct_answer == int(answer):
                 print('Молодец!')
 
-                f2.write(f'{number1} {sign} {number2} {int(repeat)-1}\n' )
-                if int(repeat) < 1:
-                    print('Ошибок больше нет, ты молодец!')
-
+                if int(repeat) > 1:
+                    f2.write(f'{number1} {sign} {number2} {int(repeat)-1}\n' )
             else:
                 print(warnings())
-    os.remove(file_name)
-    os.rename(f'tmp_{file_name}', file_name)
+                f2.write(f'{number1} {sign} {number2} {repeat}\n')
+    print('Ошибок больше нет, ты молодец!')
 
+    # удалим старый файл
+    os.remove(file_name)
+
+    # если не исправили все ошибки
+    if os.path.exists(f'tmp_{file_name}'):
+        # переименуем временный файл
+        os.rename(f'tmp_{file_name}', file_name)
+        # если исправили все ошибки
+        if os.path.getsize(file_name) < 1:
+            os.remove(file_name)
+    else:
+        print(f'{name}, ты исправил(а) все свои ошибки. Молодец!')
 # Основной блок
 print('Привет меня зовут Роджер, а как тебя?')
 name = input()
